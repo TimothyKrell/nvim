@@ -10,6 +10,15 @@ All of the included plugins are pinned to a version that ensures they are compat
 
 As I mentioned, this config is meant as a starting point for people new to Neovim who want a familiar IDE experience. The config has a very simple structure that makes it easy to add new plugins. 
 
+# TODO
+- [x] relative line numbers
+- [x] Fix dap ui startup error
+- [x] Fix null ls errors
+- [x] install missing plugins
+- [x] tokyonight theme
+- [] Which-key
+- [x] Fix illuminate nvim
+
 ## Install Neovim 0.7
 
 You can install Neovim with your package manager e.g. brew, apt, pacman etc.. but remember that when you update your packages Neovim may be upgraded to a newer version.
