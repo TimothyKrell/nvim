@@ -51,10 +51,11 @@ return packer.startup(function(use)
   use { "akinsho/bufferline.nvim", commit = "" }
   use { "moll/vim-bbye", commit = "" }
   use { "nvim-lualine/lualine.nvim", commit = "" }
+  use { "SmiteshP/nvim-navic" }
   use { "akinsho/toggleterm.nvim", commit = "" }
   use { "ahmedkhalf/project.nvim", commit = "" }
   use { "lewis6991/impatient.nvim", commit = "" }
-  use { "lukas-reineke/indent-blankline.nvim", commit = "" }
+  -- use { "lukas-reineke/indent-blankline.nvim", commit = "" }
   use { "goolord/alpha-nvim", commit = "" }
   use "folke/which-key.nvim"
   use "christoomey/vim-tmux-navigator"
@@ -65,12 +66,12 @@ return packer.startup(function(use)
   }
   use {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
+    -- event = "BufRead",
     setup = function()
       vim.g.indentLine_enabled = 1
       vim.g.indent_blankline_char = "▏"
-      vim.g.indent_blankline_filetype_exclude = {"help", "terminal", "dashboard"}
-      vim.g.indent_blankline_buftype_exclude = {"terminal"}
+      vim.g.indent_blankline_filetype_exclude = { "help", "terminal", "dashboard" }
+      vim.g.indent_blankline_buftype_exclude = { "terminal" }
       vim.g.indent_blankline_show_trailing_blankline_indent = false
       vim.g.indent_blankline_show_first_indent_level = false
       vim.g.indent_blankline_space_char_blankline = " "
@@ -88,10 +89,32 @@ return packer.startup(function(use)
     "folke/trouble.nvim",
   }
   use { 'stevearc/dressing.nvim' }
+  use { 'rcarriga/nvim-notify' }
+  use { 'laytan/cloak.nvim',
+    config = function() require('user.cloak') end,
+  }
+  use { 'nmac427/guess-indent.nvim',
+    config = function() require('guess-indent').setup({
+      auto_cmd = true,  -- Set to false to disable automatic execution
+      filetype_exclude = {  -- A list of filetypes for which the auto command gets disabled
+        "netrw",
+        "tutor",
+      },
+      buftype_exclude = {  -- A list of buffer types for which the auto command gets disabled
+        "help",
+        "nofile",
+        "terminal",
+        "prompt",
+      },
+    }) end,
+  }
 
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "" }
   use { "lunarvim/darkplus.nvim", commit = "" }
+  use { "catppuccin/nvim", as = "catpuccin",
+    config = function() require('catppuccin').setup() end,
+  }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "" } -- The completion plugin
@@ -147,7 +170,7 @@ return packer.startup(function(use)
       "Glgrep",
       "Gedit"
     },
-    ft = {"fugitive"}
+    ft = { "fugitive" }
   }
 
   -- DAP

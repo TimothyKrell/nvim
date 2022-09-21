@@ -29,5 +29,9 @@ configs.setup({
   rainbow = {
     enable = true,
     extended_mode = false, -- highlight html tags
+  },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
   }
 })

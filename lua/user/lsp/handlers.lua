@@ -70,20 +70,26 @@ local function lsp_keymaps(bufnr)
   keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", opts)
   keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", opts)
   keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-  keymap(bufnr, "n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  keymap(bufnr, "n", "<leader>lg", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
 
+local attached_bfnr = {}
+local function attach_navic(client, bufnr)
+  -- vim.g.navic_silence = true
+  local status_ok, navic = pcall(require, "nvim-navic")
+  if not status_ok then
+    return
+  end
+  if client.server_capabilities.documentSymbolProvider and not attached_bfnr[bufnr] then
+    navic.attach(client, bufnr)
+    attached_bfnr[bufnr] = true
+  end
+end
+
 M.on_attach = function(client, bufnr)
-  -- if client.name == "tsserver" then
-  --   client.resolved_capabilities.document_formatting = false
-  -- end
-
-  -- if client.name == "sumneko_lua" then
-  --   client.resolved_capabilities.document_formatting = false
-  -- end
-
   lsp_keymaps(bufnr)
+  attach_navic(client, bufnr)
 end
 
 return M

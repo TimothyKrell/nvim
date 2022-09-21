@@ -37,6 +37,23 @@ local spaces = function()
   return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
+local lspbreadcrumbs = function()
+  local none_display = "🙈🙊🙉"
+
+  local ok, navic = pcall(require, 'nvim-navic')
+  if not ok then
+    vim.pretty_print('could not load navic')
+    return "oops"
+  end
+  if navic.is_available() then
+    local l = navic.get_location()
+    -- return (l ~= "") and l or none_display
+    return l or " "
+  else
+    return none_display
+  end
+end
+
 lualine.setup {
   options = {
     globalstatus = true,
@@ -49,10 +66,26 @@ lualine.setup {
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = {"branch"},
+    lualine_b = { "branch" },
     lualine_c = { diagnostics },
     lualine_x = { diff, spaces, "encoding", filetype },
     lualine_y = { location },
     lualine_z = { "progress" },
+  },
+  winbar = {
+    lualine_a = {},
+    lualine_b = { 'filename' },
+    lualine_c = { lspbreadcrumbs },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  inactive_winbar = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { 'filename' },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
   },
 }
