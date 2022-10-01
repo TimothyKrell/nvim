@@ -3,6 +3,17 @@ if not status_ok then
   return
 end
 
+local virutal_text_on = true
+local function toggle_virtual_text()
+  if virutal_text_on then
+    vim.diagnostic.config({ virtual_text = false })
+    virutal_text_on = false
+  else
+    vim.diagnostic.config({ virtual_text = true })
+    virutal_text_on = true
+  end
+end
+
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -186,6 +197,11 @@ local mappings = {
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
+
+  S = {
+    name = "Settings",
+    v = { toggle_virtual_text, "Toggle Virtual Text" }
+  }
 }
 
 local vopts = {

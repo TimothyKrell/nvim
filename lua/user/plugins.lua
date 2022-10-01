@@ -43,19 +43,21 @@ return packer.startup(function(use)
   -- My plugins here
   use { "wbthomason/packer.nvim", commit = "" } -- Have packer manage itself
   use { "nvim-lua/plenary.nvim", commit = "" } -- Useful lua functions used by lots of plugins
+  use { "dstein64/vim-startuptime", commit = "" }
   use { "windwp/nvim-autopairs", commit = "" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "" }
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "" }
   use { "kyazdani42/nvim-web-devicons", commit = "" }
   use { "kyazdani42/nvim-tree.lua", commit = "" }
-  use { "akinsho/bufferline.nvim", commit = "" }
+  -- use { "akinsho/bufferline.nvim", commit = "",
+  --   config = function() require("user.bufferline") end,
+  -- }
   use { "moll/vim-bbye", commit = "" }
   use { "nvim-lualine/lualine.nvim", commit = "" }
   use { "SmiteshP/nvim-navic" }
   use { "akinsho/toggleterm.nvim", commit = "" }
   use { "ahmedkhalf/project.nvim", commit = "" }
   use { "lewis6991/impatient.nvim", commit = "" }
-  -- use { "lukas-reineke/indent-blankline.nvim", commit = "" }
   use { "goolord/alpha-nvim", commit = "" }
   use "folke/which-key.nvim"
   use "christoomey/vim-tmux-navigator"
@@ -95,18 +97,22 @@ return packer.startup(function(use)
   }
   use { 'nmac427/guess-indent.nvim',
     config = function() require('guess-indent').setup({
-      auto_cmd = true,  -- Set to false to disable automatic execution
-      filetype_exclude = {  -- A list of filetypes for which the auto command gets disabled
-        "netrw",
-        "tutor",
-      },
-      buftype_exclude = {  -- A list of buffer types for which the auto command gets disabled
-        "help",
-        "nofile",
-        "terminal",
-        "prompt",
-      },
-    }) end,
+        auto_cmd = true, -- Set to false to disable automatic execution
+        filetype_exclude = { -- A list of filetypes for which the auto command gets disabled
+          "netrw",
+          "tutor",
+        },
+        buftype_exclude = { -- A list of buffer types for which the auto command gets disabled
+          "help",
+          "nofile",
+          "terminal",
+          "prompt",
+        },
+      })
+    end,
+  }
+  use { 'kevinhwang91/nvim-hlslens',
+    config = function() require('user.hlslens') end
   }
 
   -- Colorschemes
@@ -135,6 +141,9 @@ return packer.startup(function(use)
   use { "neovim/nvim-lspconfig", commit = "" } -- enable LSP
   use { "jose-elias-alvarez/null-ls.nvim", commit = "" } -- for formatters and linters
   use { "RRethy/vim-illuminate" }
+  use { "j-hui/fidget.nvim",
+    config = function() require"fidget".setup() end,
+  }
 
   -- Telescope
   use { "nvim-telescope/telescope.nvim", commit = "" }
@@ -144,12 +153,27 @@ return packer.startup(function(use)
     run = "make",
   }
 
+  use {
+    "wincent/command-t", commit = "",
+    run = "cd lua/wincent/commandt/lib/ && make",
+    config = function()
+      require('wincent.commandt').setup()
+    end,
+  }
+
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
     commit = "",
   }
+  use { "nvim-treesitter/playground" }
   use "p00f/nvim-ts-rainbow" -- rainbow parens
+  use { "nvim-treesitter/nvim-treesitter-context",
+    config = function() require('user.treesitter-context') end,
+  }
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function() require('user.nvim-ufo') end,
+  }
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "" }
@@ -172,6 +196,7 @@ return packer.startup(function(use)
     },
     ft = { "fugitive" }
   }
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
   -- DAP
   use { "mfussenegger/nvim-dap", commit = "" }

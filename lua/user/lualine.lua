@@ -7,6 +7,15 @@ local hide_in_width = function()
   return vim.fn.winwidth(0) > 80
 end
 
+local mode = {
+  function()
+    return " "
+  end,
+  padding = { left = 0, right = 0 },
+  color = {},
+  cond = nil,
+}
+
 local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
@@ -19,7 +28,7 @@ local diagnostics = {
 local diff = {
   "diff",
   colored = false,
-  symbols = { added = "", modified = "", removed = "" }, -- changes diff symbols
+  symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width,
 }
 
@@ -28,13 +37,38 @@ local filetype = {
   icons_enabled = false,
 }
 
+local filetypeIcon = {
+  'filetype',
+  icon_only = true,
+  separator = "",
+  padding = { left = 1, right = 0 },
+}
+
+local filename = {
+  'filename',
+  file_status = true,
+  newfile_status = true,
+  path = 1,
+  separator = "",
+}
+
 local location = {
   "location",
   padding = 0,
 }
 
+local tabs = {
+  "tabs",
+  icons_enabled = true,
+  icon = { "裡", align = 'left' },
+}
+
 local spaces = function()
-  return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+  if (vim.api.nvim_buf_get_option(0, "expandtab")) then
+    return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+  else
+    return " "
+  end
 end
 
 local lspbreadcrumbs = function()
@@ -59,22 +93,26 @@ lualine.setup {
     globalstatus = true,
     icons_enabled = true,
     theme = "auto",
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
+    -- component_separators = { left = "", right = "" },
+    -- section_separators = { left = "", right = "" },
+    -- component_separators = { left = '', right = '' },
+    -- section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = { "alpha", "dashboard" },
     always_divide_middle = true,
   },
   sections = {
-    lualine_a = { "mode" },
+    lualine_a = { mode },
     lualine_b = { "branch" },
     lualine_c = { diagnostics },
-    lualine_x = { diff, spaces, "encoding", filetype },
+    lualine_x = { diff, spaces, "encoding", filetype, tabs },
     lualine_y = { location },
     lualine_z = { "progress" },
   },
   winbar = {
     lualine_a = {},
-    lualine_b = { 'filename' },
+    lualine_b = { filetypeIcon, filename },
     lualine_c = { lspbreadcrumbs },
     lualine_x = {},
     lualine_y = {},
