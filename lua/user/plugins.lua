@@ -125,7 +125,12 @@ return packer.startup(function(use)
   use({
     "petertriho/nvim-scrollbar",
     config = function()
-      require("scrollbar").setup()
+      local colors = require("catppuccin.palettes").get_palette()
+      require("scrollbar").setup({
+        handle = {
+          highlight = "CursorLine"
+        }
+      })
       require("scrollbar.handlers.search").setup()
     end,
   })
@@ -138,7 +143,7 @@ return packer.startup(function(use)
     "catppuccin/nvim",
     as = "catpuccin",
     config = function()
-      require("catppuccin").setup()
+      require("user.catppuccin")
     end,
   })
 
