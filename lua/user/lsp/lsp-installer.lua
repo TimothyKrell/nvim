@@ -26,7 +26,9 @@ local function isVueProject(fname)
   local depKeys = { 'dependencies', 'devDependencies' }
   local vueDep = false
   for _, depKey in pairs(depKeys) do
-    for k in pairs(packagejson[depKey]) do
+    local deps = packagejson[depKey]
+    if not deps then break end
+    for k in pairs(deps) do
       if vueDep then break end
       if string.find(k, 'vue') or string.find(k, 'nuxt') then
         vueDep = true
@@ -78,6 +80,11 @@ mason_lspconfig.setup_handlers({
       opts.root_dir = root_dir_cond(server_name, function(f) 
         return not isVueProject(f)
       end)
+    end
+
+    if server_name == "eslint" then
+      local eslint_opts = require("user.lsp.settings.eslint")
+      opts = vim.tbl_deep_extend("force", eslint_opts, opts)
     end
 
     lspconfig[server_name].setup(opts)

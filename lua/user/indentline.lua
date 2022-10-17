@@ -14,5 +14,7 @@ indent_blankline.setup {
     "help",
     "packer",
     "NvimTree",
+    "mason",
+    "Mason",
   },
 }

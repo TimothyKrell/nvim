@@ -201,6 +201,12 @@ local mappings = {
   S = {
     name = "Settings",
     v = { toggle_virtual_text, "Toggle Virtual Text" }
+  },
+
+  u = {
+    name = "UI",
+    d = { "<cmd>lua require('notify').dismiss({})<cr>", "Dismiss notifications" },
+    n = { "<cmd>Noice<cr>", "Dismiss notifications" },
   }
 }
 

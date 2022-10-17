@@ -1,6 +1,13 @@
 local colors = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
-  custom_highlights = {
-    ScrollbarHandle = { bg = colors.red }
-  }
+	styles = {
+		functions = { "italic" },
+	},
+	integrations = {
+		ts_rainbow = true,
+		gitsigns = true,
+	},
+	custom_highlights = {
+		ScrollbarHandle = { bg = colors.red },
+	},
 })

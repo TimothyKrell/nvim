@@ -105,7 +105,27 @@ lualine.setup {
   sections = {
     lualine_a = { mode },
     lualine_b = { "branch" },
-    lualine_c = { diagnostics },
+    lualine_c = { diagnostics,
+      -- {
+      --   noicestatus.message.get_hl,
+      --   cond = noicestatus.message.has,
+      -- },
+      -- {
+      --   require("noice.status").command.get,
+      --   cond = require("noice.status").command.has,
+      --   color = { fg = "#ff9e64" },
+      -- },
+      {
+        require("noice").api.statusline.mode.get,
+        cond = require("noice").api.statusline.mode.has,
+        color = { fg = "#ff9e64" },
+      },
+      -- {
+      --   require("noice.status").search.get,
+      --   cond = require("noice.status").search.has,
+      --   color = { fg = "#ff9e64" },
+      -- },
+    },
     lualine_x = { diff, spaces, "encoding", filetype, tabs },
     lualine_y = { location },
     lualine_z = { "progress" },
@@ -121,7 +141,7 @@ lualine.setup {
   inactive_winbar = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = { 'filename' },
+    lualine_c = { filetypeIcon, filename },
     lualine_x = {},
     lualine_y = {},
     lualine_z = {}

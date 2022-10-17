@@ -38,3 +38,4 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 vim.o.foldcolumn = '1'
 vim.o.foldlevelstart = 99
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
